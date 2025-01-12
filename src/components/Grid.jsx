@@ -1,8 +1,15 @@
+import { useState } from 'react';
 import Pixel from './Pixel';
 
-const Grid = () => {
-  const gridSize = 32; // 16x16 grid
-  const pixels = Array.from({ length: gridSize * gridSize }, () => '');
+const Grid = ({ selectedColor }) => {
+  const gridSize = 32;
+  const [pixels, setPixels] = useState(Array(gridSize * gridSize).fill('bg-gray-200'));
+
+  const handlePixelClick = (index) => {
+    const newPixels = [...pixels];
+    newPixels[index] = selectedColor;
+    setPixels(newPixels);
+  };
 
   return (
     <div
@@ -15,7 +22,7 @@ const Grid = () => {
         <Pixel
           key={index}
           color={color}
-          onClick={() => console.log(`Pixel ${index} clicked`)}
+          onClick={() => handlePixelClick(index)}
         />
       ))}
     </div>
