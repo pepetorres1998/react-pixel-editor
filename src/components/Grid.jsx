@@ -3,7 +3,7 @@ import Pixel from './Pixel';
 
 const Grid = ({ selectedColor }) => {
   const gridSize = 32;
-  const [pixels, setPixels] = useState(Array(gridSize * gridSize).fill('bg-gray-200'));
+  const [pixels, setPixels] = useState(Array(gridSize * gridSize).fill('#E5E7EB'));
 
   const handlePixelClick = (index) => {
     const newPixels = [...pixels];
