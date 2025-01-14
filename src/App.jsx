@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import Grid from './components/Grid';
 import { ColorPicker, useColor } from "react-color-palette";
 import "react-color-palette/css";
+import Toolbar from './components/Toolbar';
 
 const App = () => {
   const [color, setColor] = useColor('#000000');
+  const [isDrawing, setIsDrawing] = useState(true);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
@@ -11,7 +14,10 @@ const App = () => {
       <div className="mb-2 w-2/3">
         <ColorPicker hideInput={["hsv", "rgb"]} color={color} onChange={setColor} />
       </div>
-      <Grid selectedColor={color.hex}/>
+      <div className="mb-2">
+        <Toolbar isDrawing={isDrawing} onSetIsDrawing={setIsDrawing} />
+      </div>
+      <Grid selectedColor={color.hex} isDrawing={isDrawing}/>
     </div>
   );
 };

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import Pixel from './Pixel';
 
-const Grid = ({ selectedColor }) => {
+const Grid = ({ selectedColor, isDrawing }) => {
   const gridSize = 32;
   const [pixels, setPixels] = useState(Array(gridSize * gridSize).fill('#E5E7EB'));
 
-  const handlePixelClick = (index) => {
+  const handlePixelUpdate = (index) => {
     const newPixels = [...pixels];
     newPixels[index] = selectedColor;
     setPixels(newPixels);
@@ -22,7 +22,8 @@ const Grid = ({ selectedColor }) => {
         <Pixel
           key={index}
           color={color}
-          onClick={() => handlePixelClick(index)}
+          onClick={() => handlePixelUpdate(index)}
+          onMouseEnter={() => isDrawing && handlePixelUpdate(index)}
         />
       ))}
     </div>
