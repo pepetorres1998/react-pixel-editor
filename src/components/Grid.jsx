@@ -13,7 +13,7 @@ const Grid = ({ selectedColor, isDrawing }) => {
 
   return (
     <div
-      className="grid gap-1"
+      className="grid gap-1/2"
       style={{
         gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
       }}

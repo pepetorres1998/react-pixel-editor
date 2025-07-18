@@ -1,16 +1,26 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBrush, faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
+
 const Toolbar = ({isDrawing, onSetIsDrawing}) => {
   return (
-    <div className="flex gap-2 mb-4">
+    <div className="flex gap-2 my-4">
       <button className={`h-8 w-8 rounded-full border-2 bg-gray-300 ${
           isDrawing === true ? 'border-black' : 'border-transparent'
         }`}
         onClick={() => onSetIsDrawing(true)}
-      ></button>
-      <button className={`h-8 w-8 rounded-full border-2 bg-gray-400 ${
+      >
+        <FontAwesomeIcon icon={faBrush}/>
+      </button>
+      <button className={`h-8 w-8 rounded-full border-2 bg-gray-300 ${
           isDrawing === false ? 'border-black' : 'border-transparent'
         }`}
         onClick={() => onSetIsDrawing(false)}
-      ></button>
+      >
+        <FontAwesomeIcon icon={faPencil}/>
+      </button>
+      <button className={'h-8 w-8 rounded-full border-2 bg-gray-300'}>
+        <FontAwesomeIcon icon={faTrash}/>
+      </button>
     </div>
   );
 };
