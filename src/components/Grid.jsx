@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import Pixel from './Pixel';
+import { useGrid } from '../contexts/GridContext.jsx';
 
 const Grid = ({ selectedColor, isDrawing }) => {
   const gridSize = 32;
-  const [pixels, setPixels] = useState(Array(gridSize * gridSize).fill('#E5E7EB'));
+  const { gridColors, setGridColors } = useGrid();
 
   const handlePixelUpdate = (index) => {
-    const newPixels = [...pixels];
+    const newPixels = [...gridColors];
     newPixels[index] = selectedColor;
-    setPixels(newPixels);
+    setGridColors(newPixels);
   };
 
   return (
@@ -18,7 +19,7 @@ const Grid = ({ selectedColor, isDrawing }) => {
         gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
       }}
     >
-      {pixels.map((color, index) => (
+      {gridColors.map((color, index) => (
         <Pixel
           key={index}
           color={color}
