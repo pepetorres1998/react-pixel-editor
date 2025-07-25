@@ -1,4 +1,6 @@
-const Pixel = ({ color, onClick, onMouseEnter }) => {
+import React from 'react';
+
+const Pixel = React.memo(({ color, onClick, onMouseEnter }) => {
   return (
     <div
       className={`w-6 h-6 border border-gray-300`}
@@ -7,6 +9,6 @@ const Pixel = ({ color, onClick, onMouseEnter }) => {
       onMouseEnter={onMouseEnter}
     ></div>
   );
-};
+});
 
 export default Pixel;
