@@ -6,7 +6,7 @@ const Toolbar = ({isDrawing, onSetIsDrawing}) => {
   const { resetGrid } = useGrid();
 
   return (
-    <div className="flex gap-2 my-4">
+    <div className="flex flex-col gap-2 my-4">
       <button className={`h-8 w-8 rounded-full border-2 bg-gray-300 ${
           isDrawing === true ? 'border-black' : 'border-transparent'
         }`}
