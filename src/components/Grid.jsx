@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Pixel from './Pixel';
 import { useGrid } from '../contexts/GridContext.jsx';
 
