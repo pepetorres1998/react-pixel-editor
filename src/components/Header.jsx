@@ -4,7 +4,7 @@ import { faArrowLeft, faShareFromSquare } from "@fortawesome/free-solid-svg-icon
 const Header = () => {
   return (
     <div className="flex flex-row justify-around items-center w-full mb-6">
-      <button>
+      <button onClick={() => window.history.back()}>
         <FontAwesomeIcon icon={faArrowLeft}/>
       </button>
       <h1 className="text-3xl font-bold">Pixel Editor</h1>
@@ -13,6 +13,6 @@ const Header = () => {
       </button>
     </div>
   )
-}
+};
 
 export default Header;
