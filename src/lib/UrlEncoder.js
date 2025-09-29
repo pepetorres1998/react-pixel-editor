@@ -1,3 +1,4 @@
+import { Decoder } from "./url_encoder/Decoder";
 import { Token } from "./url_encoder/token";
 
 export class UrlEncoder {
@@ -8,7 +9,9 @@ export class UrlEncoder {
     return url;
   }
 
-  static decode(grid) {
-    return "tokenDecode";
+  static decode(token) {
+    const decoder = new Decoder(token);
+
+    return decoder.decode();
   }
 }

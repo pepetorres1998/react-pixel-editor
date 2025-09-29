@@ -8,17 +8,18 @@ export class Token {
   }
 
   build() {
-    const header = [0x50, 0x58, 1, this.#side];
+    const header = [80, 88, 1, this.#side];
     const colorsArray = this.getColorArray();
     const gridInt = this.getGridInt(colorsArray);
     const optimizedGridInt = this.optimizeGridInt(gridInt);
     const colorsIntArray = this.getColorsIntArray(colorsArray);
 
-    const all = [...header, ...colorsIntArray, optimizedGridInt.length, ...optimizedGridInt];
+    const all = [...header, ...colorsIntArray, optimizedGridInt.length + 1, ...optimizedGridInt];
 
-    const buf = new Uint8Array(all);
+    const buf = new Uint16Array(all);
 
     const token = this.toBase64Url(buf);
+    //debugger
 
     return token;
   }
@@ -48,19 +49,26 @@ export class Token {
   // [0, 1, 1, 2, 2, 3, 2, 2, 1, 0]
   // [(1, 0), (2, 1), (1, 3), (2, 2), (1, 1), (1, 0)]
   optimizeGridInt (gridInt) {
-    const stack = [];
+    const stack = [gridInt[0]];
     const optimizedGridInt = [];
 
-    gridInt.forEach((int) => {
-      if(stack.length === 0) {
-        stack.push(int);
-      } else if(stack[stack.length - 1] === int) {
-        stack.push(int);
+    for(let i = 1; i < gridInt.length; i++) {
+      const value = gridInt[i];
+      const last = stack[stack.length - 1];
+
+      if(value === last && stack.length < 255) {
+        stack.push(value);
       } else {
-        optimizedGridInt.push(stack.length, stack.pop());
+        optimizedGridInt.push(stack.length, last);
         stack.length = 0;
+
+        stack.push(value);
       }
-    });
+    }
+
+    if(stack.length > 0) {
+      optimizedGridInt.push(stack.length, stack.pop());
+    }
 
     return optimizedGridInt;
   }
@@ -68,7 +76,7 @@ export class Token {
   getColorsIntArray(colorsArray) {
     const colorsIntArray = [];
 
-    colorsIntArray.push(colorsArray.length * 3);
+    colorsIntArray.push((colorsArray.length * 3) + 1);
 
     colorsArray.forEach((color) => {
       const r = parseInt(color.slice(1, 3), 16);
