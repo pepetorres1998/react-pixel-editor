@@ -4,8 +4,10 @@ const GridContext = createContext();
 
 export const useGrid = () => useContext(GridContext);
 
-export const GridProvider = ({ children, gridSize = 32, defaultColor = '#FFFFFF' }) => {
-  const [gridColors, setGridColors] = useState(Array(gridSize * gridSize).fill(defaultColor));
+export const GridProvider = ({ children, gridSize = 32, defaultColor = '#FFFFFF', initialGrid = [] }) => {
+  const [gridColors, setGridColors] = useState(() => {
+    return initialGrid.length === 0 ? Array(gridSize * gridSize).fill(defaultColor) : initialGrid;
+  });
 
   const resetGrid = () => {
     setGridColors(Array(gridSize * gridSize).fill(defaultColor));
