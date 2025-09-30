@@ -26,12 +26,11 @@ export class Decoder {
     const colorsIntArraySize = bufferBody[0];
     const colorsIntArray = bufferBody.slice(1, colorsIntArraySize);
     const optimizedGridIntSize = bufferBody[colorsIntArraySize];
-    const optimizedGridInt = bufferBody.slice(colorsIntArraySize + 1);
+    const optimizedGridInt = bufferBody.slice(colorsIntArraySize);
 
     const colorsArray = this.getColorsArray(colorsIntArray);
     const gridInt = this.getGridInt(optimizedGridInt);
     const grid = [];
-    //debugger
 
     gridInt.forEach((index) => {
       grid.push(colorsArray[index]);
@@ -69,7 +68,6 @@ export class Decoder {
   fromBase64ToBuffer() {
     let str = this.#token.replace(/-/g, "+").replace(/_/g, "/");
     while (str.length % 4) str += "=";
-    //debugger
 
     const bin = atob(str);
 

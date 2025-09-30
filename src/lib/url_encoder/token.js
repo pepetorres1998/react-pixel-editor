@@ -14,12 +14,11 @@ export class Token {
     const optimizedGridInt = this.optimizeGridInt(gridInt);
     const colorsIntArray = this.getColorsIntArray(colorsArray);
 
-    const all = [...header, ...colorsIntArray, optimizedGridInt.length + 1, ...optimizedGridInt];
+    const all = [...header, ...colorsIntArray, ...optimizedGridInt];
 
     const buf = new Uint16Array(all);
 
     const token = this.toBase64Url(buf);
-    //debugger
 
     return token;
   }
