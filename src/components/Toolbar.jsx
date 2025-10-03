@@ -1,8 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBrush, faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useGrid } from "../contexts/GridContext";
+import { useToolbar } from "../contexts/ToolbarContext";
 
-const Toolbar = ({isDrawing, onSetIsDrawing}) => {
+const Toolbar = () => {
+  const { isDrawing, onSetIsDrawing } = useToolbar();
   const { resetGrid } = useGrid();
 
   return (

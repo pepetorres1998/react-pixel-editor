@@ -1,9 +1,11 @@
 import Pixel from './Pixel';
 import { useGrid } from '../contexts/GridContext.jsx';
+import { useToolbar } from '../contexts/ToolbarContext.jsx';
 
-const Grid = ({ selectedColor, isDrawing }) => {
+const Grid = ({ selectedColor }) => {
   const gridSize = 32;
   const { gridColors, setGridColors } = useGrid();
+  const { isDrawing } = useToolbar();
 
   const handlePixelUpdate = (index) => {
     const newPixels = [...gridColors];
