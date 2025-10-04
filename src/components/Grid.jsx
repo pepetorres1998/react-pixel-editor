@@ -3,21 +3,24 @@ import { useGrid } from '../contexts/GridContext.jsx';
 import { useToolbar } from '../contexts/ToolbarContext.jsx';
 import { useCallback, useEffect, useRef } from 'react';
 
-const Grid = ({ selectedColor }) => {
+const Grid = () => {
   const gridSize = 32;
   const { gridColors, setGridColors } = useGrid();
-  const { isDrawing } = useToolbar();
+  const { isDrawing, color } = useToolbar();
+
   const isDrawingRef = useRef(isDrawing);
+  const colorRef = useRef(color.hex);
 
   useEffect(() => { isDrawingRef.current = isDrawing }, [isDrawing]);
+  useEffect(() => { colorRef.current = color.hex }, [color]);
 
   const handlePixelUpdate = useCallback((index) => {
     setGridColors(prev => {
       const next = [...prev];
-      next[index] = selectedColor;
+      next[index] = colorRef.current;
       return next;
     });
-  }, [selectedColor]);
+  }, []);
 
   const handleClick = useCallback((event) => {
     const index = Number(event.currentTarget.dataset.index);
