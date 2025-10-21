@@ -7,7 +7,7 @@ export class Token {
     this.#side = side;
   }
 
-  build() {
+  async build() {
     const header = [80, 88, 1, this.#side];
     const colorsArray = this.getColorArray();
     const gridInt = this.getGridInt(colorsArray);
@@ -16,11 +16,20 @@ export class Token {
 
     const all = [...header, ...colorsIntArray, ...optimizedGridInt];
 
-    const buf = new Uint16Array(all);
+    const buf = new Uint8Array(all);
 
-    const token = this.toBase64Url(buf);
+    const compressedBuf = await this.compressBuf(buf);
+
+    const token = this.toBase64Url(compressedBuf);
 
     return token;
+  }
+
+  async compressBuf(buf) {
+    const cs = new CompressionStream("deflate-raw");
+    const compressedBuf = await new Response(new Blob([buf]).stream().pipeThrough(cs)).arrayBuffer();
+
+    return new Uint8Array(compressedBuf);
   }
 
   getColorArray() {

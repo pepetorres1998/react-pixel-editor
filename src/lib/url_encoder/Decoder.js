@@ -6,9 +6,11 @@ export class Decoder {
     this.#token = token;
   }
 
-  decode() {
+  async decode() {
     try {
-      const buffer = this.fromBase64ToBuffer();
+      const compressedBuffer = this.fromBase64ToBuffer();
+
+      const buffer = await this.decompressBuffer(compressedBuffer);
 
       const bufferBody = this.checkHeader(buffer);
 
@@ -20,6 +22,13 @@ export class Decoder {
 
       return [];
     }
+  }
+
+  async decompressBuffer(compressedBuffer) {
+    const ds = new DecompressionStream("deflate-raw");
+    const buffer = await new Response(new Blob([compressedBuffer]).stream().pipeThrough(ds)).arrayBuffer();
+
+    return new Uint8Array(buffer);
   }
 
   getGrid(bufferBody) {
@@ -71,7 +80,7 @@ export class Decoder {
 
     const bin = atob(str);
 
-    const buffer = new Uint16Array(bin.length);
+    const buffer = new Uint8Array(bin.length);
 
     for (let i = 0; i < bin.length; i++) {
       buffer[i] = bin.charCodeAt(i);

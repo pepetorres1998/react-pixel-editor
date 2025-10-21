@@ -6,7 +6,7 @@ import { useGrid } from '../contexts/GridContext.jsx';
 const Header = () => {
   const { gridColors } = useGrid();
   const copyUrl = async () => {
-    const token = UrlEncoder.encode(gridColors);
+    const token = await UrlEncoder.encode(gridColors);
 
     await navigator.clipboard.writeText(token);
   }
